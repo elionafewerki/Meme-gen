@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Assesment Build a Meme Generator</title>
+  <style>
+
+    .meme-row {
+        margin: 10px auto;
+        max-width: 500px;
+        padding: 10px;
+        background: gray;        
+    }
+    img {
+        max-width: 500px;
+    }
+    .top-text-element{
+        color: red;
+        position: relative;
+        top: 66px;
+        left: 92px;
+    }
+    .delet-row{
+        cursor: pointer;
+        text-align: right;
+    }
+    .bottom-text-element{
+        color: blue;
+        position: relative;
+        bottom: 80px;
+        left: 100px;
+    }    
+    .meme-generator {
+        margin: 40px auto;
+        width: 400px;
+        font-family: Cambria;
+        margin-bottom: 15px;
+    }
+
+    .meme-generator label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .meme-generator input{
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+    }
+
+    #meme {
+      width: 100%
+    }
+
+  </style>
+  <head>
+  <body>
+    <h1> drop down your memez!!</h1>
+    <div class="meme-generator">
+        <label> paste your url</label>
+        <input type="text" id="image-url">
+        <label> Top text</label>
+        <input type="text" id="top-text-input">
+        <label> Bottom text</label>
+        <input type="text" id="bottom-text-input">
+        <button id="generate-btn" onclick="runClickHandler()">Generate</button>
+    </div>
+    <hr/>
+
+    <div id="memes-container">
+    </div>
+
+    <div id='clear-area'></div>
+
+  </body>
+
+
+  <script>
+    function runClickHandler(){
+      const imageUrl = document.getElementById("image-url").value;
+      const topText = document.getElementById("top-text-input").value;
+      const bottomText = document.getElementById("bottom-text-input").value;
+      localStorage.setItem("imageUrl", imageUrl);
+      localStorage.setItem("topText", topText);
+      localStorage.setItem("bottomText", bottomText);
+      loadElements();
+      document.getElementById("clear-area").innerHTML = '<button id="clear-all" onclick="runClearHandler()">'+'Clear'+'</button>';
+    }  
+    function loadElements() {
+        if (localStorage.getItem("imageUrl")) {
+            document.getElementById("memes-container").innerHTML += '<div class="meme-row" onclick="runClearRowHandler()">'+ '<h1 class="delet-row" onclick="runClearRowHandler()">'+'X'+'</h1>'+'<div class="top-text-element">'+'<h1>'+localStorage.getItem("topText")+'</h1>'+'</div>' + '<div>'+'<img src='+localStorage.getItem("imageUrl")+'>'+'</div>' + " " + '<div class="bottom-text-element">'+'<h1>'+localStorage.getItem("bottomText")+'</h1>'+'</div>'+'</div>';            
+        }
+    }
+
+    function runClearHandler(){
+        document.getElementById("memes-container").innerHTML = '';
+    }  
+    function runClearRowHandler(){
+        console.log(localStorage.getItem("topText"))
+        localStorage.removeItem("topText");
+        localStorage.removeItem("imageUrl");
+        localStorage.removeItem("bottomText");
+        runClearHandler();
+        loadElements();
+    }
+
+  </script>
+ 
+  </head>
+  </html>
